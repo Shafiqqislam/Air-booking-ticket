@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight Booking</title>
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     
 </head>
 
@@ -27,7 +29,7 @@
 
     <!--Booking Section-->
     <main class="main-content container">
-        <div class="booking-form">
+        <div id="booking-part" class="booking-form">
             <h3>Booking Flights</h3>
             <div class="input-group">
                 <label for="">Flying From</label>
@@ -69,7 +71,7 @@
                     <button onclick="handleTicketChange('economyClass',true);" class="btn btn-default"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
-            <div class="calculations">
+            <div  class="calculations">
                 <div class="amount">
                     <div class="left">
                         <p>Subtotal</p>
@@ -97,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="book-now" class="btn-style">Book Now</button>
         </div>
 
         <div class="booking-content">
@@ -105,13 +107,45 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
         </div>
 
-        <div id="confirm">
-
+        <div id="confirm-ticket">
+          <p>Lorem ipsum dolor sit?</p>
         </div>
     </section>
-
+</main>
     <!--Thank You-->
      <script>
+        //Book-now button event handler
+               const bookNowBtn = document.getElementById("book-now");
+                 bookNowBtn.addEventListener("click" , function(){
+                 const calculationArea = document.getElementById("booking-part");
+                 calculationArea.style.display = "none";
+                 const confirmArea = document.getElementById('confirm-ticket');
+                 confirmArea.style.display = "block";
+                 document.getElementById("confirm-ticket").style.color = "#FFFFFF";
+                 document.getElementById("confirm-ticket").style.fontSize = "24px";
+                 document.getElementById("confirm-ticket").style.fontFamily = "Roboto', sans-serif";
+
+                 const firstTicket = document.getElementById("firstClass-count");
+                 const firstTicketNumber = parseInt(firstTicket.value);
+                 const economyTicket = document.getElementById("economyClass-count");
+                 const economyTicketNumber = parseInt(economyTicket.value);
+             
+                 if(firstTicketNumber > 0  && economyTicketNumber < 1 ){
+                    document.getElementById("confirm-ticket").innerText ="Hey ,Congratulation! for your purchased" +" "+"First-class";
+                 }
+                 else if(firstTicketNumber < 1 && economyTicketNumber > 0 ){
+                    document.getElementById("confirm-ticket").innerText ="Hey ,Congratulation! for your purchased" +" "+"Economy-class";
+                 }
+                 else if(firstTicketNumber > 0 && economyTicketNumber > 0){
+                    document.getElementById("confirm-ticket").innerText ="Hey ,Congratulation! for your purchased" +" "+ "First-class"+" " +"and"+ " "+ "Economy-class";
+                 }
+                 else{
+                    document.getElementById("confirm-ticket").innerText ="you did not purchase any ticket" ;
+                 }
+               });
+
+       
+        
          // function for ticket quantity
           function handleTicketChange(ticket ,isIncrease){
            const ticketInput = document.getElementById(ticket +'-count');
@@ -137,11 +171,6 @@
 
          // function for subtotal,tax and total
          function calculateTotalPrize(){
-        //    const firstInput = document.getElementById("first-count");
-        //    const firstCount = parseInt(firstInput.value);
-
-        //    const economyInput = document.getElementById("economy-count");
-        //    const economyCount = parseInt(economyInput.value);
             const firstClassCount = getInputValue('firstClass');
             const economyClassCount = getInputValue ('economyClass');
            const totalPrice = firstClassCount * 150 + economyClassCount * 100 ;
@@ -160,52 +189,6 @@
             return ticketCount;
          }
 
-
-        //   document.getElementById("first-increase").addEventListener("click" , function(){
-        //    const firstInput = document.getElementById("first-count");
-        //    const firstCount = parseInt(firstInput.value);
-        //    const firstNewCount = firstCount + 1;
-        //    firstInput.value = firstNewCount ;
-        //    const firstTotal = firstNewCount * 150 ;
-        //    document.getElementById("first-total").innerText = "$" + firstTotal;
-          
-        // }) ;
-        // document.getElementById("first-decrease").addEventListener("click" , function(){
-        //    const firstInput = document.getElementById("first-count");
-        //    const firstCount = parseInt(firstInput.value);
-        //    const firstNewCount = firstCount - 1;
-        //    firstInput.value = firstNewCount ;
-        //    const firstTotal = firstNewCount * 150 ;
-        //    document.getElementById("first-total").innerText = "$" + firstTotal;
-          
-        // }) ;
-
-
-//    document.getElementById("first-increase").addEventListener("click" , function(){
-//     handleTicketChange(true);
-//       });
-//       document.getElementById("first-decrease").addEventListener("click", function(){
-//         handleTicketChange(false);
-//       }); 
-      
-       
-//       function handleTicketChange(isIncrease){
-//              const firstInput = document.getElementById("first-count");
-//              const firstCount = parseInt(firstInput.value);
-//              //const phoneNewCount = phoneCount + 1;
-//              let firstNewCount = firstCount;
-//              if(isIncrease == true){
-//                 firstNewCount = firstCount + 1 ;
-//              }
-//              if(isIncrease == false && firstCount > 0){
-//                 firstNewCount = firstCount -1 ;
-//              }
-//              firstInput.value = firstNewCount ;
-//              const firstTotal = firstNewCount * 150;
-//              document.getElementById("first-total").innerText = "$"+ firstTotal; 
-//         }
-
-   
      </script>
 </body>
 
